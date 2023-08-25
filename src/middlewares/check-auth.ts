@@ -12,6 +12,7 @@ const checkAuth = (
   if (req.method === "OPTIONS") {
     return next();
   }
+
   try {
     const token = req.headers.authorization?.split(" ")[1];
 
@@ -19,7 +20,6 @@ const checkAuth = (
       const error = new HttpError("Authentication failed!", 403);
       return next(error);
     }
-
     const decodedToken: string | JwtPayload = jwt.verify(token, keys.jwtKey!);
     const userId = decodedToken.sub;
     if (userId && typeof userId === "string") {
@@ -27,6 +27,7 @@ const checkAuth = (
     } else {
       return next(new HttpError("Authentication failed!", 401));
     }
+    next();
   } catch (error) {
     console.log(error);
 
