@@ -12,7 +12,7 @@ class TodosController {
     const userId = req.userId!;
     let todos;
     try {
-      todos = await TodoServices.getTodosByUserId(userId);
+      todos = await todosServices.getTodosByUserId(userId);
     } catch (error) {
       return next(
         new HttpError("Could not find todo for the provided user id", 404)
